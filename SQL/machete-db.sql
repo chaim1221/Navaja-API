@@ -2,6 +2,8 @@
 
 -- DROP DATABASE machetedb;
 
+-- If the database exists, this will just throw an error.
+
 CREATE DATABASE machetedb
   WITH OWNER = postgres
        ENCODING = 'UTF8'
