@@ -1,0 +1,11 @@
+{
+    "name": "Navaja-API",
+    "version": "0.0.1",
+    "description": "API endpoints for the Navaja day labor platform",
+    "author": "Chaim Eliyah",
+    "dependencies": {
+        "pg": "4.4.1",
+        "any-db": "2.1.0",
+        "any-db-postgres": "2.1.4"
+    }
+}

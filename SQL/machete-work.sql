@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS work;
 
 CREATE TABLE IF NOT EXISTS work.order(
     id uuid PRIMARY KEY
-  , englishLevelRequired smallint NOT NULL
+  , englishMasteryRequired smallint NOT NULL
   , workerSkillId integer NOT NULL REFERENCES worker.skill
   , masteryRequired smallint NOT NULL
   , timeNeeded timestamp NOT NULL

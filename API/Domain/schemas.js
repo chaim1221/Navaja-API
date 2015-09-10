@@ -4,27 +4,27 @@ schemas = {
     employer: [
         address: { 
             id: null,
-            profileid: null,
-            businessid: null,
+            profileId: null,
+            businessId: null,
             address1: null,
             address2: null,
             city: null,
             state: null,
-            phoneprimary: null,
-            phonesecondary: null,
+            phonePrimary: null,
+            phoneSecondary: null,
             active: null
         },
         business: { 
             id: null,
-            profileid: null,
+            profileId: null,
             name: null,
-            federaltaxid: null,
+            federalTaxId: null,
             active: null
         },
         profile: { 
             id: null,
-            returncustomer: null,
-            receiveupdates: null,
+            returnCustomer: null,
+            receiveUpdates: null,
             name: null,
             email: null,
             password: null,
@@ -32,7 +32,7 @@ schemas = {
         },
         review: {
             id: null,
-            profileid: null,
+            profileId: null,
             rating: null,
             culture: null,
             title: null,
@@ -43,8 +43,8 @@ schemas = {
     worker: [
         address: {
             id: null,
-            profileid: null,
-            businessid: null,
+            profileId: null,
+            businessId: null,
             address1: null,
             address2: null,
             city: null,
@@ -53,20 +53,20 @@ schemas = {
         },
         business: {
             id: null,
-            profileid: null,
+            profileId: null,
             name: null,
-            federaltaxid: null,
+            federalTaxId: null,
             active: null
         },
         profile: {
             id: null,
-            returncustomer: null,
-            receiveupdates: null,
+            returnCustomer: null,
+            receiveUpdates: null,
             name: null,
             email: null,
             password: null,
-            phoneprimary: null,
-            phonesecondary: null,
+            phonePrimary: null,
+            phoneSecondary: null,
             active: null
         },
         // SKILLS ARE ADDED THROUGH AN INTERNAL TOOL
@@ -78,9 +78,9 @@ schemas = {
         // SPONSORSHIPS BY EMPLOYERS (SPONSOR JOSE FOR ENGLISH, ETC.)
         sponsorship: {
             id: null,
-            profileid: null,
-            employerprofileid: null,
-            workerskillid: null,
+            profileId: null,
+            employerProfileId: null,
+            workerSkillId: null,
             mastery: null,
             title: null,
             message: null,
@@ -91,32 +91,34 @@ schemas = {
         // AN ASSIGNMENT IS AN ACCEPTED OFFER
         assignment: {
             id: null,
-            orderid: null,
-            workerprofileid: null,
-            distancefromworker: null,
-            transportationmethodid: null,
-            acceptedwage: null,
+            orderId: null,
+            workerProfileId: null,
+            distanceFromWorker: null,
+            transportationMethodId: null,
+            acceptedWage: null,
             active: null
         },
         // THE WORKER MAKES AN OFFER
         offer: {
             id: null,
-            orderid: null,
-            workerprofileid: null,
-            meetssponsorshiprequirements: null,
-            timepromised: null,
-            counteroffer: null,
+            orderId: null,
+            workerProfileId: null,
+            meetsSponsorshipRequirements: null,
+            timePromised: null,
+            counterOffer: null,
             active: null
         },
         // THE EMPLOYER MAKES AN ORDER
         order: {
             id: null,
-            englishlevelrequired: null, // todo: englishmasteryrequired
-            workerskillid: null,
-            masteryrequired: null,
-            timeneeded: null,
-            proposedwage: null,
+            englishMasteryRequired: null,
+            workerSkillId: null,
+            masteryRequired: null,
+            timeNeeded: null,
+            proposedWage: null,
             active: null
         }
     ]
 }
+
+module.exports = schemas;

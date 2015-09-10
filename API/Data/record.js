@@ -1,15 +1,16 @@
-var Record = function () { }
+var db = require("./db.js");
+var schemas = require("../Domain/schemas.js");
 
-Record.prototype.create = function (table, callback) {
+var Record = function () { }
+Record.prototype.Create = function (table, callback) {
     var self = this;
-    
     db.create(table, this.data).run(function () {
         if (err) return callback(err);
         callback(null, self);
-    }); //?
+    });
 }
 
-Record.prototype.getById = function (id, table, callback) {
+Record.prototype.GetById = function (id, table, callback) {
     var self = this;
 
     db.get(table, { id: id }).run(function (err, data) { 
@@ -18,7 +19,7 @@ Record.prototype.getById = function (id, table, callback) {
     }
 }
 
-Record.prototype.save = function (table, callback) {
+Record.prototype.Save = function (table, callback) {
     var self = this;
     db.get(table, {id: this.data.id})
       .update(JSON.stringify(this.data))
@@ -28,7 +29,7 @@ Record.prototype.save = function (table, callback) {
     }
 }
 
-Record.prototype.remove = function (id, table, callback {
+Record.prototype.Remove = function (id, table, callback {
     var self = this;
     db.get(table, { id: id })
       .update('active', 'false') // todo: figure this out  
