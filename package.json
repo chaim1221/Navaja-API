@@ -4,10 +4,14 @@
   "description": "API endpoints for the Navaja day labor platform",
   "author": "Chaim Eliyah",
   "repository": "https://github.com/chaim1221/Navaja-API",
-  "license": "GPLv3",
-  "devDependencies": {
-    "mocha": "2.3.2",
+  "license": "GPL-3.0",
+  "dependencies": {
     "pg": "4.4.1",
     "pg-native": "1.9.0"
+  },
+  "devDependencies": {
+    "mocha": "2.3.2",
+    "request": "^2.61.0",
+    "should": "7.1.0"
   }
 }
