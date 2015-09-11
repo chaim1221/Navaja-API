@@ -1,4 +1,5 @@
-var pg = require('pg');
-var pgAny = require('any-db-postgres');
-var anyDb = require('any-db');
+var pg = require('pg').native;
+var connectionString = "postgresql://machetedb_app_user:replace_me@localhost:5432/machetedb";
+
+
 
