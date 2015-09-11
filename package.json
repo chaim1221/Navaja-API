@@ -6,6 +6,7 @@
   "repository": "https://github.com/chaim1221/Navaja-API",
   "license": "GPLv3",
   "devDependencies": {
+    "mocha": "2.3.2",
     "pg": "4.4.1",
     "pg-native": "1.9.0"
   }
