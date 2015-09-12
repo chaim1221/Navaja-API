@@ -1,23 +1,13 @@
 var assert = require("assert")
-  , http = require("http")
   , should = require("should")
-  , request = require("request")
-  , exec = require("child_process").exec;
+  , expect = require("expect")
+  , db = require("./../../../Data/db.js");
 
-describe("db", function() {
-
-    describe("constructor", function() { 
-        it("should initialize the connection string to the expected value", function() {
-            
-        });
-    });
-
-    describe("method: create", function () {
-        //before(function(done) { });
-        //after(function(done) { });
-        it("should create a record for a given existing table", function() {
-            
-            //done();
-        });
+// These tests assume you have run the scripts in the -SQL repo
+describe("module: db", function() {
+    it("should not be null", function () {
+        var client = db.client();
+        client.should.be.ok; // truthy
+        //console.log(client);
     });
 });
