@@ -1,14 +1,21 @@
-var pg = require('pg').native; // native pool, not a per-instance request
-var connectionString = "postgresql://machetedb_app_user:replace_me@localhost:5432/machetedb";
+var pg = require("pg").native; // a pool
+var config = require("./../config.js");
+var connectionString = config.database.connectionString;
 
-// data should include userId
-function create(table, data) {
+module.exports = function() {
+    var client = new pg.Client(connectionString);
+    
+    return {
+        create: function (table, data) {
+            return "success";
+        }
+    }
 }
 
-function get(table, id) {
-}
+//function Get(table, id) {
+//}
 
-function update(table, data) {
-}
+//function Update(table, data) {
+//}
 
 // deletion not supported via API (we keep everything)
