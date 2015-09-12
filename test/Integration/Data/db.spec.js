@@ -10,9 +10,9 @@ describe("module: db", function() {
     });
     
     describe("method: create", function() {
-        it("returns success", function () {
-            var success = db().create();
-            success.should.eql("success");
+        it("returns the integer value of the created record", function () {
+            var success = db();
+            success.should.be.a.Number;
         });
     });
 });
