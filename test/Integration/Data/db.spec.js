@@ -8,6 +8,7 @@ describe("db", function() {
 
     describe("constructor", function() { 
         it("should initialize the connection string to the expected value", function() {
+            
         });
     });
 
