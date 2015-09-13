@@ -5,14 +5,9 @@ var assert = require("assert")
 
 // These tests assume you have run the scripts in the -SQL repo
 describe("module: db", function() {
-    it("should not be null", function () {
-        db().should.be.ok; // truthy
-    });
-    
-    describe("method: create", function() {
-        it("returns the integer value of the created record", function () {
-            var success = db();
-            success.should.be.a.Number;
+    describe("method: read", function() {
+        it("returns a record when read from the database", function () {
+            db.read();
         });
     });
-});
+}); 
