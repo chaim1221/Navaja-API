@@ -1,24 +1,18 @@
-var pg = require("pg").native;
+var pg = require("pg");
 var config = require("./../config.js");
-var connectionString = config.database.connectionString;
 
-module.exports = function() {
-    var client = new pg.Client(connectionString);
-    client.connect(function (err) { 
-        if (err) {
-            return console.error('no can connect', err);
-        }
-        client.query('SELECT 42', function (err, result) {
-            if (err) {
-                return console.error('error running query', err);
-            }
-            console.log(result.rows[0]); // we never get HERE
-            client.end();
+pg.defaults = config.postgresql;
+
+module.exports = {
+    read: function () {
+        pg.connect(config.connectionString, function (err, client, done) {
+            if (err) { console.error("fuck you"); }
+            console.log("42");
+            done();
         });
-    });
-    return 42;
+        console.log("haha I passed yer function");
+    }
 }
-
 
 //function Get(table, id) {
 //}
