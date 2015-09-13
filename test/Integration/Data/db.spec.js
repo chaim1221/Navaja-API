@@ -7,7 +7,12 @@ var assert = require("assert")
 describe("module: db", function() {
     describe("method: read", function() {
         it("returns a record when read from the database", function () {
-            db.read();
+            db.query("select 1", {}, function (err, result) {
+                if (err) { console.error ("db errored out man"); }
+                console.log("no error...");
+                console.log(result);
+            });
         });
     });
 }); 
+
