@@ -1,15 +1,11 @@
 pg = require("pg");
 config = require("./../config.js");
 
-// this works in node, screw the test
 module.exports = { 
     query: function(text, values, cb) {
         pg.connect(config.connectionString, function(err, client, done) {
             if (err) return console.error("error connecting to postgres: ", err);
-            console.log("in connect");
-            console.log(err);
             client.query(text, values, function(err, result) {
-                console.log("in query");
                 done();
                 cb(err, result);
             })
@@ -18,6 +14,8 @@ module.exports = {
 }
 
 /*
+leave this for now, since there aren't any tests....
+
 node
 var db = require ("./db.js");
 db.query("", {}, function (err, result) {
@@ -26,3 +24,4 @@ db.query("", {}, function (err, result) {
                 console.log(result);
             });
 */
+
