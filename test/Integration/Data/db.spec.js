@@ -1,4 +1,5 @@
 var db = require("./../../../Data/db.js");
+var assert = require("chai").assert;
 var attempt = "31";
 
 describe("module: db", function() {
@@ -11,7 +12,7 @@ describe("module: db", function() {
                 function (err, result) { 
                     done();
                     if (err) throw new Error(err);
-                    console.log(result);
+                    assert.equal(result.rowCount, 1);
                 }
             );
         });
@@ -22,7 +23,7 @@ describe("module: db", function() {
                 function (err, result) {
                     done();
                     if (err) throw new Error(err);
-                    console.log(result);
+                    assert.equal(result.rowCount, 1);
                 }
             );
         });
@@ -32,7 +33,7 @@ describe("module: db", function() {
                 function (err, result) { 
                     done();
                     if (err) throw new Error(err);
-                    console.log(result);
+                    assert.equal(result.rowCount, 1);
                 }
             );
         });
