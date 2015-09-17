@@ -10,9 +10,7 @@ describe("module: db", function() {
                 values (" + attempt + ", true, true, 'Chaim Eliyah', 'ce@spam.org', 'change_me', true)", 
                 function (err, result) { 
                     done();
-                    if (err) {  
-                        throw new Error(err);
-                    }
+                    if (err) throw new Error(err);
                     console.log(result);
                 }
             );
@@ -22,6 +20,16 @@ describe("module: db", function() {
             db.query("update employer.profile\
                 set active = false where id = " + attempt,
                 function (err, result) {
+                    done();
+                    if (err) throw new Error(err);
+                    console.log(result);
+                }
+            );
+        });
+        
+        it("can delete rows", function(done) {
+            db.query("delete from employer.profile where id = " + attempt,
+                function (err, result) { 
                     done();
                     if (err) throw new Error(err);
                     console.log(result);
