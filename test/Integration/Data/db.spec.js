@@ -7,7 +7,7 @@ describe("module: db", function() {
         it("can insert rows", function(done) {
             db.query("insert into employer.profile \
                 (id, returncustomer, receiveupdates, name, email, password, active) \
-                values (29, true, true, 'Chaim Eliyah', 'ce@spam.org', 'change_me', true)", 
+                values (30, true, true, 'Chaim Eliyah', 'ce@spam.org', 'change_me', true)", 
                 function (err, result) { 
                     done();
                     if (err) {  
