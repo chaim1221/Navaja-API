@@ -1,5 +1,12 @@
-pg = require("pg");
 config = require("./../config.js");
+pg = require("knex")({
+    client: "pg",
+    connection: config.connectionString,
+    pool: {
+        min: 2,
+        max: 10
+    } // this is the default
+});
 
 module.exports = { 
     query: function(text, callback) {
