@@ -1,22 +1,40 @@
 config = require("./../config.js");
-pg = require("knex")({
+knex = require("knex")({
     client: "pg",
     connection: config.connectionString,
     pool: {
         min: 2,
         max: 10
-    } // this is the default
+    } // this is the default, just making it explicit
 });
 
 module.exports = { 
-    query: function(text, callback) {
-        pg.connect(config.connectionString, function(err, client) {
-            if (err) throw new Error(err);
-
-            client.query(text, function(error, result) {
-                callback(error, result);
-            });
-        });
+    create: function(table, data) {
+        return knex(table)
+            .returning('id')
+            .insert(data);
+    },
+    read: function(table, id) {
+        return knex(table)
+            .where({ id: parseInt(id) })
+            .select('*')
+            .then(function(value) {
+                return value[0];
+            })
+            .catch(function(error) {
+                throw new Error(error);
+            })
+    },
+    update: function(table, data) {
+        return knex(table)
+            .where({ id: parseInt(data.id) })
+            .returning('id')
+            .update(data);
+    },
+    delete: function(table, id) {
+        return knex(table)
+            .where({ id: parseInt(id) })
+            .del()
     }
 }
 
