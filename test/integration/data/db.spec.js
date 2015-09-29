@@ -1,5 +1,5 @@
 var assert = require("chai").assert;
-var db = require(__dirname + "/../../../Data/db.js");
+var db = require(__dirname + "/../../../data/db.js");
 
 describe("module: db", function() {
     describe("provides a wrapper for the execution of queries", function () {
