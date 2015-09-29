@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var NavajaRepository = require('./../../../Data/repository.js').Repository;
+var NavajaRepository = require(__dirname + '/../../../Data/repository.js').Repository;
 
 describe('When we want to keep track of employer profiles', function () {
     var navajaRepository = new NavajaRepository('employer', 'profile');

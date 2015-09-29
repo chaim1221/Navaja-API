@@ -1,6 +1,5 @@
-var db = require("./../../../Data/db.js");
 var assert = require("chai").assert;
-var attempt = "31";
+var db = require(__dirname + "/../../../Data/db.js");
 
 describe("module: db", function() {
     describe("provides a wrapper for the execution of queries", function () {
