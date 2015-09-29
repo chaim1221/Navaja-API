@@ -16,7 +16,6 @@ describe("module: db", function() {
         it("can create rows", function(done) {
             db.create('employer.profile', profile)
                 .then(function (returnedValue) { 
-                    assert.ok(returnedValue);
                     profile.id = parseInt(returnedValue);
                     done();
                 })
