@@ -1,6 +1,5 @@
-var db = require("./../../../Data/db.js");
 var assert = require("chai").assert;
-var attempt = "31";
+var db = require(__dirname + "/../../../data/db.js");
 
 describe("module: db", function() {
     describe("provides a wrapper for the execution of queries", function () {
@@ -16,6 +15,7 @@ describe("module: db", function() {
         it("can create rows", function(done) {
             db.create('employer.profile', profile)
                 .then(function (returnedValue) { 
+                    assert.ok(returnedValue);
                     profile.id = parseInt(returnedValue);
                     done();
                 })
