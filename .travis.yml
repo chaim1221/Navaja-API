@@ -3,7 +3,7 @@ node_js: "0.12"
 addons:
   postgresql: "9.4"
 before_script:
-  - "psql -c 'create role machetedb_app_user login password ''replace_me'' superuser inherit createdb createrole noreplication;'"
+  - "psql -c ''create role machetedb_app_user login password '''replace_me''' superuser inherit createdb createrole noreplication;''"
   - "export PGPASSWORD='replace_me'"
   - "psql -c 'create database machetedb;' -U machetedb_app_user"
 notifications:
