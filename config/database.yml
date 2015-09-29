@@ -1,0 +1,6 @@
+test:
+  adapter: postgresql
+  database: machetedb
+  username: machetedb_app_user
+  password: replace_me
+
