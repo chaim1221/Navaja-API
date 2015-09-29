@@ -4,8 +4,8 @@ var NavajaRepository = require(__dirname + '/../../../data/repository.js').Repos
 describe('When we want to keep track of employer profiles', function () {
     var navajaRepository = new NavajaRepository('employer', 'profile');
     var profile = {
-        returncustomer: true,
-        receiveupdates: true, 
+        returnCustomer: true,
+        receiveUpdates: true, 
         name: 'Chaim Eliyah', 
         email: 'ce@spam.org', 
         password: 'change_me', 

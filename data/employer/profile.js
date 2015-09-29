@@ -5,3 +5,4 @@ var EmployerProfileRepository = function() {
 }
 
 exports.Repository = EmployerProfileRepository;
+

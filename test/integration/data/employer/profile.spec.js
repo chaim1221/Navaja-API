@@ -4,15 +4,15 @@ var EmployerProfileRepository = require(__dirname + '/../../../../data/employer/
 describe('When we want to keep track of employer profiles', function () {
     var employerProfileRepository = new EmployerProfileRepository();
     var profile = {
-        returncustomer: true,
-        receiveupdates: true, 
+        returnCustomer: true,
+        receiveUpdates: true, 
         name: 'Chaim Eliyah', 
         email: 'ce@spam.org', 
         password: 'change_me', 
         active: true
     };
     
-    describe('Then the repository', function () {
+    describe('Repository: EmployerProfileRepository', function () {
         it('Can add employer profiles', function (done) {
             employerProfileRepository.add(profile).then(function (returnedValue) {
                 assert.ok(returnedValue);
