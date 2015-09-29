@@ -2,14 +2,9 @@ language: node_js
 node_js: '0.12'
 addons:
   postgresql: 9.3
-postgres:
-  adapter: postgresql
-  database: machetedb
-  username: machetedb_app_user
-  password: replace_me
 before_script:
   - "exports PGPASSWORD=replace_me"
-  - "psql -c 'create database machetedb;' -U machetedb_app_user
+  - "psql -c 'create database machetedb;' -U machetedb_app_user"
   - "node ./node_modules/navaja-sql/app.js"
 notifications:
   slack:
