@@ -1,6 +1,6 @@
 
 module.exports = {
-    connectionString: "postgresql://postgres@localhost:5432/machetedb",
+    connectionString: "postgresql://machetedb_app_user:replace_me@localhost:5432/machetedb",
     postgresql: {
         database: "machetedb",
         host: "localhost",
