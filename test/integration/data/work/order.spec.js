@@ -11,7 +11,7 @@ describe('When we want to keep track of an work order', function () {
         englishMasteryRequired: 5,
         workerSkillId: null,
         masteryRequired: 5,
-        timeNeeded: "2015-09-30 10:00:00",
+        timeNeeded: new Date(),
         proposedWage: 10.80,
         active: true
     }
@@ -69,7 +69,7 @@ describe('When we want to keep track of an work order', function () {
                 assert.equal(result.workerSkillId, order.workerSkillId);
                 assert.equal(result.masteryRequired, order.masteryRequired);
                 // we're having timestamp problems.
-                //assert.equal(result.timeNeeded, order.timeNeeded);
+                assert.equal(Object(result.timeNeeded).valueOf(), Object(order.timeNeeded).valueOf());
                 assert.equal((9999 * result.proposedWage) / 9999, order.proposedWage);
                 assert.equal(result.active, order.active);
                 done();

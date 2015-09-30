@@ -14,7 +14,7 @@ describe('When we want to keep track of an worker offer', function () {
         meetsSponsorshipRequirements: true,
         location: "(45.516666667, 122.683333333)",
         transportationMethodId: 1, // US English
-        timePromised: "2015-09-30 12:00:00",
+        timePromised: new Date(),
         counterOffer: 11.00,
         active: true
     }
@@ -55,7 +55,7 @@ describe('When we want to keep track of an worker offer', function () {
             englishMasteryRequired: 5,
             workerSkillId: null,
             masteryRequired: 5,
-            timeNeeded: "2015-09-30 10:00:00",
+            timeNeeded: new Date(),
             proposedWage: 10.80,
             active: true
         };
@@ -99,11 +99,15 @@ describe('When we want to keep track of an worker offer', function () {
         it('Can get work offers by id', function (done) {
             workOfferRepository.getById(offer.id).then(function (result) {
                 assert.equal(result.id, offer.id);
-                assert.equal(result.profileId, offer.profileId);
-                assert.equal(result.employerProfileId, offer.employerProfileId);
-                assert.equal(result.mastery, offer.mastery);
-                assert.equal(result.title, offer.title);
-                assert.equal(result.message, offer.message);
+                assert.equal(result.orderId, offer.orderId);
+                assert.equal(result.meetsSponsorshipRequirements, offer.meetsSponsorshipRequirements);
+                var locationInPostgres = offer.location.split('(')[1].split(')')[0].split(',');
+                assert.equal(result.location.x, locationInPostgres[0]);
+                assert.equal(result.location.y, locationInPostgres[1]);
+                assert.equal(result.transportationMethodId, offer.transportationMethodId);
+                // this seems to be a bug in 'assert' because these are EXACTLY THE SAME
+                assert.equal(Object(result.timePromised).valueOf(), Object(offer.timePromised).valueOf());
+                assert.equal(result.counterOffer, offer.counterOffer);
                 assert.equal(result.active, offer.active);
                 done();
             });

@@ -53,7 +53,7 @@ describe('When we want to keep track of an worker assignment', function () {
             englishMasteryRequired: 5,
             workerSkillId: null,
             masteryRequired: 5,
-            timeNeeded: "2015-09-30 10:00:00",
+            timeNeeded: new Date(),
             proposedWage: 10.80,
             active: true
         };
@@ -64,7 +64,7 @@ describe('When we want to keep track of an worker assignment', function () {
             meetsSponsorshipRequirements: true,
             location: "(45.516666667, 122.683333333)",
             transportationMethodId: 1, // US English
-            timePromised: "2015-09-30 12:00:00",
+            timePromised: new Date(),
             counterOffer: 11.00,
             active: true
         }
@@ -110,17 +110,11 @@ describe('When we want to keep track of an worker assignment', function () {
             });
         });
         
-        // TODO: Test multiple assignmentes for a single worker
-        // TODO: Add functionality to return all active assignmentes for a single worker
-    
         it('Can get worker assignmentes by id', function (done) {
             workAssignmentRepository.getById(assignment.id).then(function (result) {
                 assert.equal(result.id, assignment.id);
-                assert.equal(result.profileId, assignment.profileId);
-                assert.equal(result.employerProfileId, assignment.employerProfileId);
-                assert.equal(result.mastery, assignment.mastery);
-                assert.equal(result.title, assignment.title);
-                assert.equal(result.message, assignment.message);
+                assert.equal(result.offerId, assignment.offerId);
+                assert.equal(result.acceptedWage, assignment.acceptedWage);
                 assert.equal(result.active, assignment.active);
                 done();
             });
