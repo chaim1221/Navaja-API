@@ -4,8 +4,8 @@ var db = require(__dirname + "/../../../data/db.js");
 describe("module: db", function() {
     describe("provides a wrapper for the execution of queries", function () {
         var profile = {
-            returncustomer: true,
-            receiveupdates: true, 
+            returnCustomer: true,
+            receiveUpdates: true, 
             name: 'Chaim Eliyah', 
             email: 'ce@spam.org', 
             password: 'change_me', 
