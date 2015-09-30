@@ -1,4 +1,4 @@
 require ("./config.js")
-require ("./Data/db.js")
-require ("./API/endpoints.js")
+require ("./data/db.js")
+require ("./api/endpoints.js")
 
