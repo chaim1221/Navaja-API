@@ -1,4 +1,6 @@
 var EmployerProfile = require('./../../domain/employer/profile.js');
+// need dependency injection to test this w/o accessing database:
+// bueller, bueller...
 var EmployerProfileRepository = require('./../../data/employer/profile.js').Repository;
 
 function EmployerProfileController() {
@@ -25,8 +27,11 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
             var employerProfile = new EmployerProfile(request.body);
             employerProfileRepository.update(employerProfile)
                 .then(function (returnedValue) {
-                    console.log(returnedValue);
-                    response.status(returnedValue ? 200 : 500).end();
+                    if (returnedValue.length > 0) {
+                        response.status(200).end();
+                    } else {
+                        response.status(404).end();
+                    }
                 });
         });
         
@@ -51,7 +56,11 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
                     employerProfile.active = false;
                     employerProfileRepository.update(employerProfile)
                         .then(function (returnedValue) {
-                            response.json(returnedValue);
+                            if (returnedValue.length > 0) {
+                                response.status(200).end();
+                            } else {
+                                response.status(500).end();
+                            }
                         });
                 } else {
                     response.status(404).end();
