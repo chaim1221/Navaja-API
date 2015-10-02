@@ -12,8 +12,12 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
             var employerProfile = new EmployerProfile(request.body);
             employerProfileRepository.add(employerProfile)
                 .then(function (returnedValue) {
-                    employerProfile.id = parseInt(returnedValue);
-                    response.json(employerProfile);
+                    if (returnedValue) {
+                        employerProfile.id = parseInt(returnedValue);
+                        response.json(employerProfile);
+                    } else {
+                        response.status(500).end();
+                    }
                 });
         })
         .put(function (request, response) {
@@ -21,6 +25,7 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
             var employerProfile = new EmployerProfile(request.body);
             employerProfileRepository.update(employerProfile)
                 .then(function (returnedValue) {
+                    console.log(returnedValue);
                     response.status(returnedValue ? 200 : 500).end();
                 });
         });
@@ -29,7 +34,12 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
     .get(function(request, response) {
         var employerProfileRepository = new EmployerProfileRepository();
         var employerProfile = employerProfileRepository.getById(request.params.profile_id).then(function (profile) {
-            response.json(profile);
+            if(profile){
+                var employerProfile = new EmployerProfile(profile);
+                response.json(employerProfile);
+            } else {
+                response.status(404).end()
+            }
         });
     })
     .delete(function (request, response) {
