@@ -1,7 +1,7 @@
 # Navaja-API
 An API designed to permit CRUD operations against a PostgreSQL database.
 
-![Build Image](https://travis-ci.org/chaim1221/Navaja-API.svg)
+![Build Image](https://travis-ci.org/chaim1221/navaja-api.svg)
 
 
 # Motto
