@@ -88,29 +88,26 @@ schemas = {
         }
     ],
     work: [
-        // AN ASSIGNMENT IS AN ACCEPTED OFFER
         assignment: {
             id: null,
-            orderId: null,
-            workerProfileId: null,
-            distanceFromWorker: null,
-            transportationMethodId: null,
+            offerId: null,
             acceptedWage: null,
             active: null
         },
-        // THE WORKER MAKES AN OFFER
         offer: {
             id: null,
             orderId: null,
             workerProfileId: null,
             meetsSponsorshipRequirements: null,
+            location: null,
+            transportationMethodId: null,
             timePromised: null,
             counterOffer: null,
             active: null
         },
-        // THE EMPLOYER MAKES AN ORDER
         order: {
             id: null,
+            employerProfileId: null,
             englishMasteryRequired: null,
             workerSkillId: null,
             masteryRequired: null,

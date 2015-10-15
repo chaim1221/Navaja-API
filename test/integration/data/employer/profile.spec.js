@@ -1,8 +1,8 @@
 var assert = require('chai').assert;
-var NavajaRepository = require(__dirname + '/../../../data/repository.js').Repository;
+var EmployerProfileRepository = require(__dirname + '/../../../../data/employer/profile.js').Repository;
 
 describe('When we want to keep track of employer profiles', function () {
-    var navajaRepository = new NavajaRepository('employer', 'profile');
+    var employerProfileRepository = new EmployerProfileRepository();
     var profile = {
         returnCustomer: true,
         receiveUpdates: true, 
@@ -12,9 +12,9 @@ describe('When we want to keep track of employer profiles', function () {
         active: true
     };
     
-    describe('Then the repository', function () {
+    describe('Repository: EmployerProfileRepository', function () {
         it('Can add employer profiles', function (done) {
-            navajaRepository.add(profile).then(function (returnedValue) {
+            employerProfileRepository.add(profile).then(function (returnedValue) {
                 assert.ok(returnedValue);
                 profile.id = parseInt(returnedValue);
                 done();
@@ -22,7 +22,7 @@ describe('When we want to keep track of employer profiles', function () {
         });
         
         it('Can get employer profiles by id', function (done) {
-            navajaRepository.getById(profile.id).then(function (result) {
+            employerProfileRepository.getById(profile.id).then(function (result) {
                 assert.equal(result.id, profile.id);
                 assert.equal(result.returncustomer, profile.returncustomer);
                 assert.equal(result.receiveupdates, profile.receiveupdates);
@@ -36,14 +36,14 @@ describe('When we want to keep track of employer profiles', function () {
         
         it('Can update employer profiles', function (done) {
             profile.email = "spam@ce.org";
-            navajaRepository.update(profile).then(function (returnedValue) {
+            employerProfileRepository.update(profile).then(function (returnedValue) {
                 assert.ok(returnedValue);
                 done();
             });
         });
         
         it("can delete rows", function(done) {
-            navajaRepository.remove(profile.id)
+            employerProfileRepository.remove(profile.id)
                 .then(function(rowsAffected) {
                     assert.isAbove(rowsAffected, 0);
                     done();
