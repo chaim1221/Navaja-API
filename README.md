@@ -11,3 +11,12 @@ Every person has a right to a day job. The best way to gain experience and train
 This project is released as open source under the [GPLv3 license]. References to the GPLv3 license must be present in all source code directories in this repository. That is by no means the only exclusive license the authors are allowed to issue.
 
   [GPLv3 license]: http://www.gnu.org/licenses/gpl-3.0.en.html
+
+# Stuff I Can Do
+Help me come up with a styleguide
+Take the developed employer-profile API endpoint and create more endpoints with that pattern
+Write tests
+Train someone else working on this project
+Join us for a happy hour (or organize one!)
+Work on a related project
+

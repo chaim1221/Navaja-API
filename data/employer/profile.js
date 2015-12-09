@@ -1,7 +1,8 @@
 var NavajaRepository = require('./../repository.js').Repository;
 
 var EmployerProfileRepository = function() {
-    return new NavajaRepository('employer', 'profile');
+    var navajaRepository = new NavajaRepository('employer', 'profile');
+    return navajaRepository;
 }
 
 exports.Repository = EmployerProfileRepository;
