@@ -14,7 +14,19 @@ module.exports = {
             .returning('id')
             .insert(data);
     },
-    read: function(table, id) {
+    read: function(table, column, value) {
+        return knex(table)
+            // we are expecting these to be the same type ^_^
+            .where(column, value)
+            .select('*')
+            .then(function(value) {
+                return value[0];
+            })
+            .catch(function(error) {
+                throw new Error(error);
+            })
+    },
+    readById: function(table, id) {
         return knex(table)
             .where({ id: parseInt(id) })
             .select('*')
@@ -34,7 +46,7 @@ module.exports = {
     delete: function(table, id) {
         return knex(table)
             .where({ id: parseInt(id) })
-            .del()
+            .del();
     }
 }
 

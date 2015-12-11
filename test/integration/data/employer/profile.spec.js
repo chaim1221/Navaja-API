@@ -41,13 +41,20 @@ describe('When we want to keep track of employer profiles', function () {
                 done();
             });
         });
+
+        //it('Can get employer profiles by email', function (done) {
+        //    var matches = "spam@ce.org";
+        //    var expected = employerProfileRepository.getByEmail(matches);
+        //    assert.equal(matches, expected.email);
+        //    done();
+        //});
         
-        it("can delete rows", function(done) {
+        it("can delete employer profiles", function(done) {
             employerProfileRepository.remove(profile.id)
                 .then(function(rowsAffected) {
                     assert.isAbove(rowsAffected, 0);
                     done();
-                });
+            });
         });
     });
 });

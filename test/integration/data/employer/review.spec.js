@@ -4,6 +4,16 @@ var EmployerReviewRepository = require(__dirname + '/../../../../data/employer/r
 
 describe('When we want to keep track of an employer review', function () {
     var employerReviewRepository = new EmployerReviewRepository();
+    var employerProfileRepository = new EmployerProfileRepository();
+
+    var profile = {
+        returnCustomer: true,
+        receiveUpdates: true, 
+        name: 'Barack Obama', 
+        email: 'obama@spam.org', 
+        password: 'change_me', 
+        active: true
+    };
     
     var review = {
         profileId: null,
@@ -14,20 +24,11 @@ describe('When we want to keep track of an employer review', function () {
         active: true
     }
     
-    before(function (done) {    
-        var employerProfileRepository = new EmployerProfileRepository();
-
-        var profile = {
-            returnCustomer: true,
-            receiveUpdates: true, 
-            name: 'Barack Obama', 
-            email: 'obama@spam.org', 
-            password: 'change_me', 
-            active: true
-        };
-
+    before(function (done) {
         employerProfileRepository.add(profile).then(function (returnedValue) {
-            review.profileId = parseInt(returnedValue);
+            var iValue = parseInt(returnedValue);
+            profile.id = iValue;
+            review.profileId = iValue;
             done();
         });
     });
@@ -70,6 +71,14 @@ describe('When we want to keep track of an employer review', function () {
                     done();
                 });
         });
+    });
+
+    after(function (done) {
+        employerProfileRepository.remove(profile.id)
+            .then(function(rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                done();
+            });
     });
 });
 

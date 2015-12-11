@@ -8,20 +8,49 @@ var WorkAssignmentRepository = require(__dirname + '/../../../../data/work/assig
 
 describe('When we want to keep track of an worker assignment', function () {
     var workAssignmentRepository = new WorkAssignmentRepository();
+    var employerProfileRepository = new EmployerProfileRepository();
+    var workOrderRepository = new WorkOrderRepository();
+    var workOfferRepository = new WorkOfferRepository();
     
     var assignment = {
         offerId: null,
         acceptedWage: 11,
         active: true
     }
-    
-    
-    before(function (done) {    
-        var employerProfileRepository = new EmployerProfileRepository();
+
+    var employerProfile = {
+        returnCustomer: true,
+        receiveUpdates: true, 
+        name: 'Barack Obama', 
+        email: 'obama@spam.org', 
+        password: 'change_me', 
+        active: true
+    };
+
+    var order = {
+        employerProfileId: null,
+        englishMasteryRequired: 5,
+        workerSkillId: null,
+        masteryRequired: 5,
+        timeNeeded: new Date(),
+        proposedWage: 10.80,
+        active: true
+    };
+                
+    var offer = {
+        orderId: null,
+        workerProfileId: null,
+        meetsSponsorshipRequirements: true,
+        location: "(45.516666667, 122.683333333)",
+        transportationMethodId: 1, // US English
+        timePromised: new Date(),
+        counterOffer: 11.00,
+        active: true
+    }
+
+    before(function (done) {
         var workerProfileRepository = new WorkerProfileRepository();
         var workerSkillRepository = new WorkerSkillRepository();
-        var workOrderRepository = new WorkOrderRepository();
-        var workOfferRepository = new WorkOfferRepository();
         
         var workerProfile = {
             returnCustomer: true,
@@ -33,44 +62,16 @@ describe('When we want to keep track of an worker assignment', function () {
             phoneSecondary: '800-555-1212',
             active: true
         };
-        
-        var employerProfile = {
-            returnCustomer: true,
-            receiveUpdates: true, 
-            name: 'Barack Obama', 
-            email: 'obama@spam.org', 
-            password: 'change_me', 
-            active: true
-        };
-        
+
         var skill = {
             name: "Find Loose Firewood",
             active: true
         };
-
-        var order = {
-            employerProfileId: null,
-            englishMasteryRequired: 5,
-            workerSkillId: null,
-            masteryRequired: 5,
-            timeNeeded: new Date(),
-            proposedWage: 10.80,
-            active: true
-        };
-                    
-        var offer = {
-            orderId: null,
-            workerProfileId: null,
-            meetsSponsorshipRequirements: true,
-            location: "(45.516666667, 122.683333333)",
-            transportationMethodId: 1, // US English
-            timePromised: new Date(),
-            counterOffer: 11.00,
-            active: true
-        }
         
         employerProfileRepository.add(employerProfile).then(function (returnedValue) {
-            order.employerProfileId = parseInt(returnedValue);
+            var iValue = parseInt(returnedValue);
+            employerProfile.id = iValue;
+            order.employerProfileId = iValue;
             complete();
         });
         
@@ -80,7 +81,9 @@ describe('When we want to keep track of an worker assignment', function () {
         });
 
         workerProfileRepository.add(workerProfile).then(function (returnedValue) {
-            offer.workerProfileId = parseInt(returnedValue);
+            var iValue = parseInt(returnedValue);
+            workerProfile.id = iValue;
+            offer.workerProfileId = iValue;
             complete();
         });
 
@@ -89,11 +92,15 @@ describe('When we want to keep track of an worker assignment', function () {
             && order.workerSkillId !== null
             && offer.workerProfileId !== null) {
                  workOrderRepository.add(order).then(function (returnedValue) {
-                    offer.orderId = parseInt(returnedValue);
+                    var iValue = parseInt(returnedValue);
+                    order.id = iValue;
+                    offer.orderId = iValue;
                 })
                 .then(function () {
                     workOfferRepository.add(offer).then(function (returnedValue) {
-                        assignment.offerId = parseInt(returnedValue);
+                        var iValue = parseInt(returnedValue);
+                        offer.id = iValue;
+                        assignment.offerId = iValue;
                         done();
                     });
                 });
@@ -135,6 +142,34 @@ describe('When we want to keep track of an worker assignment', function () {
                     done();
                 });
         });
+    });
+    
+    after(function (done) {
+        var i = 0;
+        
+        workOfferRepository.remove(offer.id)
+            .then(function(rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                i++;
+                complete(i);
+            });
+        
+        workOrderRepository.remove(order.id)
+            .then(function(rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                i++;
+                complete(i);
+            });
+            
+        function complete(count) {
+            if (count == 2) {
+                employerProfileRepository.remove(employerProfile.id)
+                    .then(function(rowsAffected) {
+                        assert.equal(rowsAffected, 1);
+                        done();
+                    });
+            }
+        }
     });
 });
 

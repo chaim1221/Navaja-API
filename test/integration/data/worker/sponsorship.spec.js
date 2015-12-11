@@ -6,7 +6,17 @@ var WorkerSponsorshipRepository = require(__dirname + '/../../../../data/worker/
 
 describe('When we want to keep track of an worker sponsorship', function () {
     var workerSponsorshipRepository = new WorkerSponsorshipRepository();
-    
+    var employerProfileRepository = new EmployerProfileRepository();    
+        
+    var employerProfile = {
+        returnCustomer: true,
+        receiveUpdates: true, 
+        name: 'Barack Obama', 
+        email: 'obama@spam.org', 
+        password: 'change_me', 
+        active: true
+    };
+
     var sponsorship = {
         profileId: null,
         employerProfileId: null,
@@ -20,7 +30,6 @@ describe('When we want to keep track of an worker sponsorship', function () {
     
     before(function (done) {    
         var workerProfileRepository = new WorkerProfileRepository();
-        var employerProfileRepository = new EmployerProfileRepository();
         var workerSkillRepository = new WorkerSkillRepository();
         
         var workerProfile = {
@@ -31,15 +40,6 @@ describe('When we want to keep track of an worker sponsorship', function () {
             password: 'change_me', 
             phonePrimary: '503-867-5309',
             phoneSecondary: '800-555-1212',
-            active: true
-        };
-        
-        var employerProfile = {
-            returnCustomer: true,
-            receiveUpdates: true, 
-            name: 'Barack Obama', 
-            email: 'obama@spam.org', 
-            password: 'change_me', 
             active: true
         };
         
@@ -54,7 +54,9 @@ describe('When we want to keep track of an worker sponsorship', function () {
         });
         
         employerProfileRepository.add(employerProfile).then(function (returnedValue) {
-            sponsorship.employerProfileId = parseInt(returnedValue);
+            var iValue = parseInt(returnedValue);
+            employerProfile.id = iValue;
+            sponsorship.employerProfileId = iValue;
             complete();
         });
         
@@ -112,6 +114,14 @@ describe('When we want to keep track of an worker sponsorship', function () {
                     done();
                 });
         });
+    });
+
+    after(function (done) {
+        employerProfileRepository.remove(employerProfile.id)
+            .then(function(rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                done();
+            });
     });
 });
 
