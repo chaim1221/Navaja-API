@@ -22,6 +22,7 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
                     }
             });
         })
+        //TODO .get (function (request, response) { //get by email });
         .put(function (request, response) {
             var employerProfileRepository = new EmployerProfileRepository();
             var employerProfile = new EmployerProfile(request.body);
@@ -32,6 +33,20 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
                     } else {
                         response.status(404).end();
                     }
+        })
+        .delete(function (request, response) {
+            var employerProfileRepository = new EmployerProfileRepository();
+            var employerProfile = employerProfileRepository.getById(request.body.id);
+            employerProfile = request.body;
+            employerProfile.active = false;
+            employerProfileRepository.update(employerProfile)
+                .then(function (returnedValue) {
+                    if (returnedValue.length > 0) {
+                        response.status(200).end();
+                    } else {
+                        response.status(404).end();
+                    }
+                });
         });
     });
 

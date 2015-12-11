@@ -42,13 +42,16 @@ describe('When we want to keep track of employer profiles', function () {
             });
         });
 
-        //it('Can get employer profiles by email', function (done) {
-        //    var matches = "spam@ce.org";
-        //    var expected = employerProfileRepository.getByEmail(matches);
-        //    assert.equal(matches, expected.email);
-        //    done();
-        //});
-        
+        it('Can get employer profiles by email', function (done) {
+            employerProfileRepository.getByEmail(profile.email)
+                .then(function (result) {
+                    assert.equal(result.id, profile.id);
+                    assert.equal(result.email, profile.email);
+                    assert.equal(result.password, profile.password);
+                    done();
+                });
+        });
+
         it("can delete employer profiles", function(done) {
             employerProfileRepository.remove(profile.id)
                 .then(function(rowsAffected) {
