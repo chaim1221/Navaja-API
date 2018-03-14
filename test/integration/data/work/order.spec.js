@@ -5,6 +5,16 @@ var WorkOrderRepository = require(__dirname + '/../../../../data/work/order.js')
 
 describe('When we want to keep track of an work order', function () {
     var workOrderRepository = new WorkOrderRepository();
+    var employerProfileRepository = new EmployerProfileRepository();
+
+    var employerProfile = {
+        returnCustomer: true,
+        receiveUpdates: true, 
+        name: 'Barack Obama', 
+        email: 'obama@spam.org', 
+        password: 'change_me', 
+        active: true
+    };
     
     var order = {
         employerProfileId: null,
@@ -18,19 +28,9 @@ describe('When we want to keep track of an work order', function () {
     
     before(function (done) {    
         var workerSkillRepository = new WorkerSkillRepository();
-        var employerProfileRepository = new EmployerProfileRepository();
         
         var skill = {
             name: "Find Loose Firewood",
-            active: true
-        };
-        
-        var employer = {
-            returnCustomer: true,
-            receiveUpdates: true, 
-            name: 'Barack Obama', 
-            email: 'obama@spam.org', 
-            password: 'change_me', 
             active: true
         };
 
@@ -39,8 +39,10 @@ describe('When we want to keep track of an work order', function () {
             complete();
         });
         
-        employerProfileRepository.add(employer).then(function (returnedValue) {
-            order.employerProfileId = parseInt(returnedValue);
+        employerProfileRepository.add(employerProfile).then(function (returnedValue) {
+            var iValue = parseInt(returnedValue);
+            employerProfile.id = iValue;
+            order.employerProfileId = iValue;
             complete();
         });
         
@@ -91,6 +93,14 @@ describe('When we want to keep track of an work order', function () {
                     done();
                 });
         });
+    });
+
+    after(function (done) {
+        employerProfileRepository.remove(employerProfile.id)
+            .then(function(rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                done();
+            });
     });
 });
 

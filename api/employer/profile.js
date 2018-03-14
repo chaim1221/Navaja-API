@@ -4,7 +4,7 @@ var EmployerProfile = require('./../../domain/employer/profile.js');
 var EmployerProfileRepository = require('./../../data/employer/profile.js').Repository;
 
 function EmployerProfileController() {
-}; // is this a good idea? is it immutable?
+};
 
 EmployerProfileController.prototype.defineRoutes = function(router) {
     router.route('/employer/profile')
@@ -20,8 +20,9 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
                     } else {
                         response.status(500).end();
                     }
-                });
+            });
         })
+        //TODO .get (function (request, response) { //get by email });
         .put(function (request, response) {
             var employerProfileRepository = new EmployerProfileRepository();
             var employerProfile = new EmployerProfile(request.body);
@@ -32,42 +33,57 @@ EmployerProfileController.prototype.defineRoutes = function(router) {
                     } else {
                         response.status(404).end();
                     }
+        })
+        .delete(function (request, response) {
+            var employerProfileRepository = new EmployerProfileRepository();
+            var employerProfile = employerProfileRepository.getById(request.body.id);
+            employerProfile = request.body;
+            employerProfile.active = false;
+            employerProfileRepository.update(employerProfile)
+                .then(function (returnedValue) {
+                    if (returnedValue.length > 0) {
+                        response.status(200).end();
+                    } else {
+                        response.status(404).end();
+                    }
                 });
         });
-        
-    router.route('/employer/profile/:profile_id')
-    .get(function(request, response) {
-        var employerProfileRepository = new EmployerProfileRepository();
-        var employerProfile = employerProfileRepository.getById(request.params.profile_id).then(function (profile) {
-            if(profile){
-                var employerProfile = new EmployerProfile(profile);
-                response.json(employerProfile);
-            } else {
-                response.status(404).end()
-            }
-        });
-    })
-    .delete(function (request, response) {
-        var employerProfileRepository = new EmployerProfileRepository();
-        employerProfileRepository.getById(request.params.profile_id)
-            .then(function (result) {
-                if (result) {
-                    var employerProfile = new EmployerProfile(result);
-                    employerProfile.active = false;
-                    employerProfileRepository.update(employerProfile)
-                        .then(function (returnedValue) {
-                            if (returnedValue.length > 0) {
-                                response.status(200).end();
-                            } else {
-                                response.status(500).end();
-                            }
-                        });
-                } else {
-                    response.status(404).end();
-                }
-            });
     });
 
+    // leaving these in for now so the Postman tests still work
+    // we don't actually want to use this pattern
+    router.route('/employer/profile/:profile_id')
+        .get(function(request, response) {
+            var employerProfileRepository = new EmployerProfileRepository();
+            var employerProfile = employerProfileRepository.getById(request.params.profile_id).then(function (profile) {
+                if(profile){
+                    var employerProfile = new EmployerProfile(profile);
+                    response.json(employerProfile);
+                } else {
+                    response.status(404).end()
+                }
+            });
+        })
+        .delete(function (request, response) {
+            var employerProfileRepository = new EmployerProfileRepository();
+            employerProfileRepository.getById(request.params.profile_id)
+                .then(function (result) {
+                    if (result) {
+                        var employerProfile = new EmployerProfile(result);
+                        employerProfile.active = false;
+                        employerProfileRepository.update(employerProfile)
+                            .then(function (returnedValue) {
+                                if (returnedValue.length > 0) {
+                                    response.status(200).end();
+                                } else {
+                                    response.status(500).end();
+                                }
+                            });
+                    } else {
+                        response.status(404).end();
+                    }
+        });
+    });
 }
 
 module.exports = EmployerProfileController;

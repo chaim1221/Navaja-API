@@ -41,13 +41,23 @@ describe('When we want to keep track of employer profiles', function () {
                 done();
             });
         });
-        
-        it("can delete rows", function(done) {
+
+        it('Can get employer profiles by email', function (done) {
+            employerProfileRepository.getByEmail(profile.email)
+                .then(function (result) {
+                    assert.equal(result.id, profile.id);
+                    assert.equal(result.email, profile.email);
+                    assert.equal(result.password, profile.password);
+                    done();
+                });
+        });
+
+        it("can delete employer profiles", function(done) {
             employerProfileRepository.remove(profile.id)
                 .then(function(rowsAffected) {
                     assert.isAbove(rowsAffected, 0);
                     done();
-                });
+            });
         });
     });
 });

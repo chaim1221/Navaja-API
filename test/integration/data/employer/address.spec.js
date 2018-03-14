@@ -4,11 +4,12 @@ var EmployerAddressRepository = require(__dirname + '/../../../../data/employer/
 
 describe('When we want to keep track of employer addresses', function () {
     var employerAddressRepository = new EmployerAddressRepository();
+    var employerProfileRepository = new EmployerProfileRepository();
     
     var address = {
         profileId: null,
         businessId: null,
-        address1: "1600 Pennsylvania Ave.",
+        address1: "1234 Any St.",
         address2: "Ste. 100",
         city: "Portland",
         state: "OR",
@@ -17,20 +18,20 @@ describe('When we want to keep track of employer addresses', function () {
         active: true
     }
     
-    before(function (done) {    
-        var employerProfileRepository = new EmployerProfileRepository();
+    var profile = {
+        returnCustomer: true,
+        receiveUpdates: true, 
+        name: 'Barack Obama', 
+        email: 'obama@spam.org', 
+        password: 'change_me', 
+        active: true
+    };
 
-        var profile = {
-            returnCustomer: true,
-            receiveUpdates: true, 
-            name: 'Barack Obama', 
-            email: 'obama@spam.org', 
-            password: 'change_me', 
-            active: true
-        };
-
+    before(function (done) {
         employerProfileRepository.add(profile).then(function (returnedValue) {
-            address.profileId = parseInt(returnedValue);
+            var iValue = parseInt(returnedValue);
+            profile.id = iValue;
+            address.profileId = iValue;
             done();
         });
     });
@@ -74,10 +75,18 @@ describe('When we want to keep track of employer addresses', function () {
         it("can delete rows", function(done) {
             employerAddressRepository.remove(address.id)
                 .then(function(rowsAffected) {
-                    assert.isAbove(rowsAffected, 0);
+                    assert.equal(rowsAffected, 1); 
                     done();
                 });
-        });
+        });        
+    });
+    
+    after(function (done) {
+        employerProfileRepository.remove(profile.id)
+            .then(function(rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                done();
+            });
     });
 });
 

@@ -16,7 +16,7 @@ NavajaRepository.prototype = {
         return db.create(this.schema + '.' + this.table, data);
     },
     getById: function (id) {
-        return db.read(this.schema + '.' + this.table, id);
+        return db.readById(this.schema + '.' + this.table, id);
     },
     update: function (data) {
         return db.update(this.schema + '.' + this.table, data);

@@ -5,10 +5,31 @@ var WorkerSkillRepository = require(__dirname + '/../../../../data/worker/skill.
 var WorkOrderRepository = require(__dirname + '/../../../../data/work/order.js').Repository;
 var WorkOfferRepository = require(__dirname + '/../../../../data/work/offer.js').Repository;
 
-describe('When we want to keep track of an worker offer', function () {
+describe('When we want to keep track of a work offer', function () {
     var workOfferRepository = new WorkOfferRepository();
+    var employerProfileRepository = new EmployerProfileRepository();
+    var workOrderRepository = new WorkOrderRepository();
     
-    var offer = {
+    var employerProfile = {
+        returnCustomer: true,
+        receiveUpdates: true, 
+        name: 'Barack Obama', 
+        email: 'obama@spam.org', 
+        password: 'change_me', 
+        active: true
+    };
+
+    var workOrder = {
+        employerProfileId: null,
+        englishMasteryRequired: 5,
+        workerSkillId: null,
+        masteryRequired: 5,
+        timeNeeded: new Date(),
+        proposedWage: 10.80,
+        active: true
+    };
+    
+    var workOffer = {
         orderId: null,
         workerProfileId: null,
         meetsSponsorshipRequirements: true,
@@ -20,10 +41,8 @@ describe('When we want to keep track of an worker offer', function () {
     }
     
     before(function (done) {    
-        var employerProfileRepository = new EmployerProfileRepository();
         var workerProfileRepository = new WorkerProfileRepository();
         var workerSkillRepository = new WorkerSkillRepository();
-        var workOrderRepository = new WorkOrderRepository();
         
         var workerProfile = {
             returnCustomer: true,
@@ -36,51 +55,39 @@ describe('When we want to keep track of an worker offer', function () {
             active: true
         };
         
-        var employerProfile = {
-            returnCustomer: true,
-            receiveUpdates: true, 
-            name: 'Barack Obama', 
-            email: 'obama@spam.org', 
-            password: 'change_me', 
-            active: true
-        };
-        
         var skill = {
             name: "Find Loose Firewood",
             active: true
         };
 
-        var order = {
-            employerProfileId: null,
-            englishMasteryRequired: 5,
-            workerSkillId: null,
-            masteryRequired: 5,
-            timeNeeded: new Date(),
-            proposedWage: 10.80,
-            active: true
-        };
-
         workerProfileRepository.add(workerProfile).then(function (returnedValue) {
-            offer.workerProfileId = parseInt(returnedValue);
+            workOffer.workerProfileId = parseInt(returnedValue);
             complete();
         });
         
         employerProfileRepository.add(employerProfile).then(function (returnedValue) {
-            order.employerProfileId = parseInt(returnedValue);
+            var iValue = parseInt(returnedValue);
+            employerProfile.id = iValue;
+            workOrder.employerProfileId = iValue;
             complete();
         });
         
         workerSkillRepository.add(skill).then(function (returnedValue) {
-            order.workerSkillId = parseInt(returnedValue);
+            workOrder.workerSkillId = parseInt(returnedValue);
             complete();
         });
 
         function complete() {
-            if (offer.workerProfileId !== null 
-            && order.employerProfileId !== null 
-            && order.workerSkillId !== null) {
-                workOrderRepository.add(order).then(function (returnedValue) {
-                    offer.orderId = parseInt(returnedValue);
+            if (workOffer.workerProfileId !== null 
+            && workOrder.employerProfileId !== null 
+            && workOrder.workerSkillId !== null) {
+                workOrderRepository.add(workOrder).then(function (returnedValue) {
+                    //console.log("I'm here");
+                    var iValue = parseInt(returnedValue);
+                    workOrder.id = iValue;
+                    
+                    
+                    workOffer.orderId = iValue;
                     done();
                 });
             }
@@ -88,46 +95,65 @@ describe('When we want to keep track of an worker offer', function () {
     });
     
     describe("Repository: WorkerOfferRepository", function () {
-        it('Can add worker offeres', function (done) {
-            workOfferRepository.add(offer).then(function (returnedValue) {
+        it('Can add work offers', function (done) {
+            workOfferRepository.add(workOffer).then(function (returnedValue) {
                 assert.ok(returnedValue);
-                offer.id = parseInt(returnedValue);
+                var iValue = parseInt(returnedValue);
+                workOffer.id = iValue;
                 done();
             });
         });
     
         it('Can get work offers by id', function (done) {
-            workOfferRepository.getById(offer.id).then(function (result) {
-                assert.equal(result.id, offer.id);
-                assert.equal(result.orderId, offer.orderId);
-                assert.equal(result.meetsSponsorshipRequirements, offer.meetsSponsorshipRequirements);
-                var locationInPostgres = offer.location.split('(')[1].split(')')[0].split(',');
+            workOfferRepository.getById(workOffer.id).then(function (result) {
+                assert.equal(result.id, workOffer.id);
+                assert.equal(result.orderId, workOffer.orderId);
+                assert.equal(result.meetsSponsorshipRequirements, workOffer.meetsSponsorshipRequirements);
+                var locationInPostgres = workOffer.location.split('(')[1].split(')')[0].split(',');
                 assert.equal(result.location.x, locationInPostgres[0]);
                 assert.equal(result.location.y, locationInPostgres[1]);
-                assert.equal(result.transportationMethodId, offer.transportationMethodId);
+                assert.equal(result.transportationMethodId, workOffer.transportationMethodId);
                 // this seems to be a bug in 'assert' because these are EXACTLY THE SAME
-                assert.equal(Object(result.timePromised).valueOf(), Object(offer.timePromised).valueOf());
-                assert.equal(result.counterOffer, offer.counterOffer);
-                assert.equal(result.active, offer.active);
+                assert.equal(Object(result.timePromised).valueOf(), Object(workOffer.timePromised).valueOf());
+                assert.equal(result.counterOffer, workOffer.counterOffer);
+                assert.equal(result.active, workOffer.active);
                 done();
             });
         });
         
         it('Can update work offers', function (done) {
-            offer.active = false;
-            workOfferRepository.update(offer).then(function (returnedValue) {
+            workOffer.active = false;
+            workOfferRepository.update(workOffer).then(function (returnedValue) {
                 assert.ok(returnedValue);
                 done();
             });
         });
         
         it("can delete rows", function(done) {
-            workOfferRepository.remove(offer.id)
+            workOfferRepository.remove(workOffer.id)
                 .then(function(rowsAffected) {
                     assert.isAbove(rowsAffected, 0);
                     done();
                 });
         });
+    });
+    
+    after(function (done) {
+        workOrderRepository.remove(workOrder.id)
+            .then(function (rowsAffected) {
+                assert.equal(rowsAffected, 1);
+                complete(true);
+            });
+            
+        function complete(condition) {
+            if (condition) {
+              employerProfileRepository.remove(employerProfile.id)
+                .then(function(rowsAffected) {
+                    assert.equal(rowsAffected, 1);
+                    done();
+                });
+            }
+        }
     });
 });
 

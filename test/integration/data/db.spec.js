@@ -21,8 +21,15 @@ describe("module: db", function() {
                 })
         });
         
-        it("can read rows", function(done) {
-            db.read('employer.profile', profile.id).then(function (result) {
+        it("can read rows by column name and value", function (done) {
+            db.read('employer.profile', 'email', profile.email).then(function (result) {
+                assert.equal(result.id, profile.id);
+                done();
+            });
+        });
+        
+        it("can read rows by id", function(done) {
+            db.readById('employer.profile', profile.id).then(function (result) {
                 assert.equal(result.id, profile.id);
                 assert.equal(result.returncustomer, profile.returncustomer);
                 assert.equal(result.receiveupdates, profile.receiveupdates);
